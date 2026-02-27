@@ -1,45 +1,130 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { profileApi } from '../services/profile';
 import './EditProfile.css';
 
 function EditProfile() {
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const fileInputRef = useRef(null);
   const [formData, setFormData] = useState({
-    name: 'Jacob West',
-    username: 'jacob_w',
+    name: '',
+    username: '',
     website: '',
-    bio: 'Digital goodies designer\n@pixsellz\nEverything is designed.',
-    email: 'jacob.west@gmail.com',
-    phone: '+1 202 555 0147',
-    gender: 'Male'
+    bio: '',
+    email: '',
+    phone: '',
+    gender: ''
   });
+  const [avatar, setAvatar] = useState('/images/profile-image1.png');
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    const load = async () => {
+      try {
+        const { user } = await profileApi.getProfile();
+        setFormData({
+          name: user.name || '',
+          username: user.username || '',
+          website: user.website || '',
+          bio: user.bio || '',
+          email: user.email || '',
+          phone: user.phone || '',
+          gender: user.gender || ''
+        });
+        setAvatar(user.avatar || '/images/profile-image1.png');
+      } catch (e) {
+        if (e?.status === 401) navigate('/login');
+        else setError('Failed to load profile');
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setError('');
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate('/profile');
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setSaving(true);
+    setError('');
+    try {
+      const { avatar: newAvatar } = await profileApi.changeAvatar(file);
+      setAvatar(newAvatar);
+    } catch (err) {
+      setError(err.message || 'Failed to upload avatar');
+    } finally {
+      setSaving(false);
+    }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    setError('');
+    try {
+      await profileApi.updateProfile(formData);
+      navigate('/profile');
+    } catch (err) {
+      const msg = err.errors ? Object.values(err.errors).flat()[0] : err.message;
+      setError(msg || 'Failed to update profile');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="edit-profile-container">
+        <div className="edit-profile-loading">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="edit-profile-container">
       <div className="edit-profile-header">
-        <button className="header-btn cancel" onClick={() => navigate(-1)}>
+        <button className="header-btn cancel" onClick={() => navigate(-1)} disabled={saving}>
           Cancel
         </button>
         <h1 className="edit-profile-title">Edit Profile</h1>
-        <button className="header-btn done" onClick={handleSubmit}>
-          Done
+        <button className="header-btn done" onClick={handleSubmit} disabled={saving}>
+          {saving ? 'Saving...' : 'Done'}
         </button>
       </div>
 
       <div className="edit-profile-content">
+        {error && <p className="edit-profile-error">{error}</p>}
         <div className="profile-photo-section">
-          <img src="/images/profile-image1.png" alt="profile" className="edit-profile-avatar" />
-          <button className="change-photo-btn">Change Profile Photo</button>
+          <img src={avatar} alt="profile" className="edit-profile-avatar" />
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleAvatarChange}
+            style={{ display: 'none' }}
+          />
+          <button
+            type="button"
+            className="change-photo-btn"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={saving}
+          >
+            Change Profile Photo
+          </button>
         </div>
 
         <div className="edit-form-section">
@@ -80,7 +165,7 @@ function EditProfile() {
               rows={4}
             />
           </div>
-          <button className="link-btn">Switch to Professional Account</button>
+          <button type="button" className="link-btn">Switch to Professional Account</button>
         </div>
 
         <div className="private-section">
@@ -108,6 +193,7 @@ function EditProfile() {
             <input
               type="text"
               name="gender"
+              placeholder="Male, Female, Other"
               value={formData.gender}
               onChange={handleChange}
             />

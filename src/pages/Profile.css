@@ -6,6 +6,14 @@
   padding-bottom: 60px;
 }
 
+.profile-loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8e8e8e;
+}
+
 .profile-header-top {
   display: flex;
   align-items: center;

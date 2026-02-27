@@ -8,10 +8,13 @@ export const api = {
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
     const headers = {
-      'Content-Type': 'application/json',
       'Accept': 'application/json',
       ...options.headers,
     };
+
+    if (!(options.body instanceof FormData)) {
+      headers['Content-Type'] = 'application/json';
+    }
 
     const token = getToken();
     if (token) {
