@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { AiFillHome, AiOutlineHome, AiOutlineSearch, AiFillSearch, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiFillHome, AiOutlineHome, AiOutlineSearch, AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { MdAddBox, MdAdd } from 'react-icons/md';
 import { FaUserCircle } from 'react-icons/fa';
 import './Navbar.css';
@@ -13,7 +13,7 @@ function BottomNavbar() {
         {location.pathname === '/home' ? <AiFillHome className="nav-icon-bottom" /> : <AiOutlineHome className="nav-icon-bottom" />}
       </Link>
       <Link to="/search" className={`nav-item ${location.pathname === '/search' ? 'active' : ''}`}>
-        {location.pathname === '/search' ? <AiFillSearch className="nav-icon-bottom" /> : <AiOutlineSearch className="nav-icon-bottom" />}
+        <AiOutlineSearch className="nav-icon-bottom" />
       </Link>
       <Link to="/add" className={`nav-item ${location.pathname === '/add' ? 'active' : ''}`}>
         {location.pathname === '/add' ? <MdAddBox className="nav-icon-bottom" /> : <MdAdd className="nav-icon-bottom" />}
