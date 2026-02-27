@@ -6,13 +6,12 @@ function TopNavbar() {
   return (
     <div className="top-navbar">
       <div className="top-nav-left">
-        <span className="time">9:41</span>
+      <MdCameraAlt className="nav-icon" />
       </div>
       <div className="top-nav-center">
         <h1 className="instagram-logo-nav">Instagram</h1>
       </div>
       <div className="top-nav-right">
-        <MdCameraAlt className="nav-icon" />
         <div className="nav-icon-wrapper">
           <div className="notification-dot"></div>
           <MdSend className="nav-icon" />
