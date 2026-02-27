@@ -5,6 +5,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import Home from './pages/Home';
 import Search from './pages/Search';
 import Activity from './pages/Activity';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/search" element={<Search />} />
         <Route path="/activity" element={<Activity />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
