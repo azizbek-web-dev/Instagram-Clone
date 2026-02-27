@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { MdCameraAlt, MdSend } from 'react-icons/md';
 import './Navbar.css';
 
 function TopNavbar() {
@@ -11,10 +12,10 @@ function TopNavbar() {
         <h1 className="instagram-logo-nav">Instagram</h1>
       </div>
       <div className="top-nav-right">
-        <img src="/icons/camera.png" alt="camera" className="nav-icon" />
+        <MdCameraAlt className="nav-icon" />
         <div className="nav-icon-wrapper">
           <div className="notification-dot"></div>
-          <img src="/icons/messanger.png" alt="messages" className="nav-icon" />
+          <MdSend className="nav-icon" />
         </div>
       </div>
     </div>

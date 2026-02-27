@@ -61,6 +61,7 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
+  color: #262626;
 }
 
 .bottom-navbar {
@@ -94,12 +95,12 @@
   width: 24px;
   height: 24px;
   cursor: pointer;
+  color: #262626;
 }
 
 .profile-icon {
   width: 24px;
   height: 24px;
-  border-radius: 50%;
 }
 
 .nav-item.active .nav-icon-bottom {

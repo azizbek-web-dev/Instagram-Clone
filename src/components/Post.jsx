@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { AiFillHeart, AiOutlineHeart, AiOutlineComment, AiFillCheckCircle } from 'react-icons/ai';
+import { MdSend, MdMoreHoriz, MdBookmark, MdBookmarkBorder } from 'react-icons/md';
 import './Post.css';
 
 function Post({ post }) {
@@ -22,13 +24,13 @@ function Post({ post }) {
             <div className="post-username-row">
               <span className="post-username">{post.username}</span>
               {post.verified && (
-                <img src="/icons/verifed.png" alt="verified" className="verified-icon" />
+                <AiFillCheckCircle className="verified-icon" />
               )}
             </div>
             {post.location && <span className="post-location">{post.location}</span>}
           </div>
         </div>
-        <img src="/icons/more.png" alt="more" className="more-icon" />
+        <MdMoreHoriz className="more-icon" />
       </div>
 
       <div className="post-image-wrapper">
@@ -43,17 +45,13 @@ function Post({ post }) {
       <div className="post-actions">
         <div className="post-actions-left">
           <button onClick={handleLike} className="action-btn">
-            <img 
-              src="/icons/like.svg" 
-              alt="like" 
-              className={`action-icon ${liked ? 'liked' : ''}`}
-            />
+            {liked ? <AiFillHeart className="action-icon liked" /> : <AiOutlineHeart className="action-icon" />}
           </button>
           <button className="action-btn">
-            <img src="/icons/comment.png" alt="comment" className="action-icon" />
+            <AiOutlineComment className="action-icon" />
           </button>
           <button className="action-btn">
-            <img src="/icons/messanger.png" alt="share" className="action-icon" />
+            <MdSend className="action-icon" />
           </button>
           {post.isCarousel && (
             <div className="carousel-dots">
@@ -67,11 +65,7 @@ function Post({ post }) {
           )}
         </div>
         <button onClick={handleSave} className="action-btn">
-          <img 
-            src="/icons/save.png" 
-            alt="save" 
-            className={`action-icon ${saved ? 'saved' : ''}`}
-          />
+          {saved ? <MdBookmark className="action-icon saved" /> : <MdBookmarkBorder className="action-icon" />}
         </button>
       </div>
 
