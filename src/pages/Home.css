@@ -13,3 +13,10 @@
 .posts-container {
   background-color: #ffffff;
 }
+
+.posts-loading,
+.posts-empty {
+  padding: 40px;
+  text-align: center;
+  color: #8e8e8e;
+}

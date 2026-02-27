@@ -6,7 +6,6 @@ import { MdOutlineKeyboardArrowDown, MdOutlineMenu } from 'react-icons/md';
 import { BsGrid3X3, BsPersonBadge } from 'react-icons/bs';
 import { IoAdd } from 'react-icons/io5';
 import { profileApi } from '../services/profile';
-import { API_BASE_URL } from '../config/api';
 import './Profile.css';
 
 const highlights = [
@@ -44,7 +43,7 @@ function Profile() {
 
   const avatarSrc = profile?.avatar || '/images/profile-image1.png';
   const gridImages = posts.length > 0
-    ? posts.map((p) => p.image?.startsWith('http') ? p.image : `${API_BASE_URL}/storage/${p.image}`)
+    ? posts.map((p) => p.image || '/images/main-post.png')
     : Array(9).fill('/images/main-post.png');
 
   if (loading) {

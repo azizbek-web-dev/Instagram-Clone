@@ -45,7 +45,7 @@ export const api = {
   post(endpoint, body) {
     return this.request(endpoint, {
       method: 'POST',
-      body: JSON.stringify(body),
+      body: body instanceof FormData ? body : JSON.stringify(body),
     });
   },
 
