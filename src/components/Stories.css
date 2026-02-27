@@ -47,6 +47,19 @@
   transform: scale(1.05);
 }
 
+.story-circle.add {
+  background: #dbdbdb;
+}
+
+.story-add-icon {
+  font-size: 24px;
+  color: #262626;
+}
+
+.story-circle.viewed {
+  background: #dbdbdb;
+}
+
 .story-image {
   width: 100%;
   height: 100%;

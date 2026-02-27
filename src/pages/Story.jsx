@@ -1,41 +1,70 @@
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { IoClose } from 'react-icons/io5';
 import { MdCameraAlt, MdSend } from 'react-icons/md';
 import { MdMoreHoriz } from 'react-icons/md';
+import { storiesApi } from '../services/stories';
+import { useAuth } from '../context/AuthContext';
 import './Story.css';
-
-const storyUsers = {
-  'Your Story': { image: '/images/profile-image1.png', storyImage: '/images/main-post.png' },
-  zackjohn: { image: '/images/profile-image3.png', storyImage: '/images/main-post.png' },
-  kieron_d: { image: '/images/profile-image4.png', storyImage: '/images/main-post.png' },
-  craig_: { image: '/images/profile-image5.png', storyImage: '/images/main-post.png' },
-  craig_love: { image: '/images/profile-image5.png', storyImage: '/images/main-post.png' }
-};
 
 function Story() {
   const { username } = useParams();
   const navigate = useNavigate();
-  const user = storyUsers[username] || storyUsers.craig_;
+  const { user: authUser } = useAuth();
+  const [data, setData] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await storiesApi.getStory(username);
+        setData(res);
+      } catch (e) {
+        navigate(-1);
+      }
+    };
+    load();
+  }, [username, navigate]);
+
+  if (!data) return null;
+
+  const stories = data.stories || [];
+  const currentStory = stories[currentIndex];
+  const avatar = data.user?.avatar || '/images/profile-image1.png';
+
+  const handleNext = () => {
+    if (currentIndex < stories.length - 1) {
+      setCurrentIndex((i) => i + 1);
+    } else {
+      navigate(-1);
+    }
+  };
 
   return (
     <div className="story-view-container">
       <div className="story-progress-bar">
-        <div className="story-progress-fill"></div>
+        {stories.map((_, i) => (
+          <div key={i} className="story-progress-segment">
+            <div className={`story-progress-fill ${i < currentIndex ? 'done' : ''} ${i === currentIndex ? 'active' : ''}`} />
+          </div>
+        ))}
       </div>
 
       <div className="story-header">
         <div className="story-user-info">
-          <img src={user.image} alt={username} className="story-header-avatar" />
-          <span className="story-username">{username}</span>
-          <span className="story-time">4h</span>
+          <img src={avatar} alt={username} className="story-header-avatar" />
+          <span className="story-username">{data.user?.username || username}</span>
+          <span className="story-time">Now</span>
         </div>
         <button className="story-close-btn" onClick={() => navigate(-1)}>
           <IoClose className="close-icon" />
         </button>
       </div>
 
-      <div className="story-content">
-        <img src={user.storyImage} alt="story" className="story-image-full" />
+      <div className="story-content" onClick={handleNext}>
+        {currentStory && (
+          <img src={currentStory.image} alt="story" className="story-image-full" />
+        )}
       </div>
 
       <div className="story-bottom-bar">

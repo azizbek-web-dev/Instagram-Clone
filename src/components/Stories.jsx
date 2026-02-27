@@ -1,34 +1,67 @@
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { storiesApi } from '../services/stories';
 import './Stories.css';
 
-const stories = [
-  { id: 1, username: 'Your Story', image: '/images/profile-image1.png', isLive: false },
-  { id: 2, username: 'karennne', image: '/images/profile-image2.png', isLive: true },
-  { id: 3, username: 'zackjohn', image: '/images/profile-image3.png', isLive: false },
-  { id: 4, username: 'kieron_d', image: '/images/profile-image4.png', isLive: false },
-  { id: 5, username: 'craig_', image: '/images/profile-image5.png', isLive: false },
-];
-
 function Stories() {
+  const [stories, setStories] = useState([]);
+  const fileInputRef = useRef(null);
+
+  const load = async () => {
+    try {
+      const { stories: data } = await storiesApi.getStories();
+      setStories(data || []);
+    } catch (e) {
+      setStories([]);
+    }
+  };
+
+  useEffect(() => {
+    load();
+  }, []);
+
+  const handleAddStory = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      await storiesApi.createStory(file);
+      load();
+    } catch (err) {}
+  };
+
   return (
     <div className="stories-container">
       <div className="stories-scroll">
-        {stories.map((story) => {
+        <div
+          className="story-item"
+          onClick={() => fileInputRef.current?.click()}
+          style={{ cursor: 'pointer' }}
+        >
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleAddStory}
+            style={{ display: 'none' }}
+          />
+          <div className="story-circle add">
+            <span className="story-add-icon">+</span>
+          </div>
+          <p className="story-username">Your Story</p>
+        </div>
+        {stories.map((item) => {
+          const username = item.user?.username || item.user?.id;
+          const avatar = item.user?.avatar || '/images/profile-image1.png';
           const content = (
             <>
-              <div className="story-circle">
-                <img src={story.image} alt={story.username} className="story-image" />
+              <div className={`story-circle ${item.viewed ? 'viewed' : ''}`}>
+                <img src={avatar} alt={username} className="story-image" />
               </div>
-              {story.isLive && <span className="live-badge">LIVE</span>}
-              <p className="story-username">{story.username}</p>
+              <p className="story-username">{username}</p>
             </>
           );
-          return story.isLive ? (
-            <Link key={story.id} to={`/live/${story.username}`} className="story-item">
-              {content}
-            </Link>
-          ) : (
-            <Link key={story.id} to={`/stories/${story.username}`} className="story-item">
+          return (
+            <Link key={item.user?.id} to={`/stories/${username}`} className="story-item">
               {content}
             </Link>
           );
