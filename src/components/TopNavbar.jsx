@@ -6,7 +6,9 @@ function TopNavbar() {
   return (
     <div className="top-navbar">
       <div className="top-nav-left">
-      <MdCameraAlt className="nav-icon" />
+        <Link to="/my-live">
+          <MdCameraAlt className="nav-icon" />
+        </Link>
       </div>
       <div className="top-nav-center">
         <h1 className="instagram-logo-nav">Instagram</h1>

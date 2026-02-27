@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import Search from './pages/Search';
 import Activity from './pages/Activity';
 import Profile from './pages/Profile';
+import Live from './pages/Live';
+import MyLive from './pages/MyLive';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/activity" element={<Activity />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/live/:username" element={<Live />} />
+        <Route path="/my-live" element={<MyLive />} />
       </Routes>
     </Router>
   );

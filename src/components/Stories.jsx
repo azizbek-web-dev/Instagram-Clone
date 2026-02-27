@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Stories.css';
 
 const stories = [
@@ -12,15 +13,24 @@ function Stories() {
   return (
     <div className="stories-container">
       <div className="stories-scroll">
-        {stories.map((story) => (
-          <div key={story.id} className="story-item">
-            <div className="story-circle">
-              <img src={story.image} alt={story.username} className="story-image" />
-            </div>
-            {story.isLive && <span className="live-badge">LIVE</span>}
-            <p className="story-username">{story.username}</p>
-          </div>
-        ))}
+        {stories.map((story) => {
+          const content = (
+            <>
+              <div className="story-circle">
+                <img src={story.image} alt={story.username} className="story-image" />
+              </div>
+              {story.isLive && <span className="live-badge">LIVE</span>}
+              <p className="story-username">{story.username}</p>
+            </>
+          );
+          return story.isLive ? (
+            <Link key={story.id} to={`/live/${story.username}`} className="story-item">
+              {content}
+            </Link>
+          ) : (
+            <div key={story.id} className="story-item">{content}</div>
+          );
+        })}
       </div>
     </div>
   );
