@@ -3,25 +3,28 @@ import TopNavbar from '../components/TopNavbar';
 import BottomNavbar from '../components/BottomNavbar';
 import Stories from '../components/Stories';
 import Post from '../components/Post';
+import CreatePost from '../components/CreatePost';
 import { postsApi } from '../services/posts';
 import './Home.css';
 
 function Home() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showCreatePost, setShowCreatePost] = useState(false);
+
+  const loadPosts = async () => {
+    try {
+      const { posts: data } = await postsApi.getFeed();
+      setPosts(data || []);
+    } catch (e) {
+      setPosts([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const load = async () => {
-      try {
-        const { posts: data } = await postsApi.getFeed();
-        setPosts(data || []);
-      } catch (e) {
-        setPosts([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
+    loadPosts();
   }, []);
 
   const onPostUpdate = (id, updates) => {
@@ -51,7 +54,13 @@ function Home() {
           )}
         </div>
       </div>
-      <BottomNavbar />
+      <BottomNavbar onAddPost={() => setShowCreatePost(true)} />
+      {showCreatePost && (
+        <CreatePost
+          onClose={() => setShowCreatePost(false)}
+          onSuccess={loadPosts}
+        />
+      )}
     </div>
   );
 }

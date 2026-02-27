@@ -10,6 +10,11 @@ function Post({ post, onUpdate }) {
   const [liked, setLiked] = useState(post.is_liked || false);
   const [saved, setSaved] = useState(post.is_saved || false);
   const [likesCount, setLikesCount] = useState(post.likes_count ?? 0);
+  // izohlar ochiq yoki yopiq
+  const [showComments, setShowComments] = useState(false);
+  const [comments, setComments] = useState([]);
+  const [commentText, setCommentText] = useState('');
+  const [commentsLoaded, setCommentsLoaded] = useState(false);
 
   const handleLike = async () => {
     try {
@@ -39,6 +44,32 @@ function Post({ post, onUpdate }) {
     } catch (e) {}
   };
 
+  // izohlar ochilganda yuklash
+  const handleCommentClick = async () => {
+    if (!showComments && !commentsLoaded) {
+      try {
+        const res = await postsApi.getComments(post.id);
+        setComments(res.comments || []);
+        setCommentsLoaded(true);
+      } catch (e) {
+        setComments([]);
+      }
+    }
+    setShowComments(!showComments);
+  };
+
+  // yangi izoh yozish
+  const handleAddComment = async (e) => {
+    e.preventDefault();
+    if (!commentText.trim()) return;
+    try {
+      const res = await postsApi.addComment(post.id, commentText.trim());
+      setComments((prev) => [res.comment, ...prev]);
+      setCommentText('');
+      onUpdate?.({ comments_count: (post.comments_count ?? 0) + 1 });
+    } catch (e) {}
+  };
+
   return (
     <div className="post-container">
       <div className="post-header">
@@ -64,7 +95,7 @@ function Post({ post, onUpdate }) {
           <button onClick={handleLike} className="action-btn">
             {liked ? <AiFillHeart className="action-icon liked" /> : <AiOutlineHeart className="action-icon" />}
           </button>
-          <button className="action-btn">
+          <button onClick={handleCommentClick} className="action-btn">
             <AiOutlineComment className="action-icon" />
           </button>
           <button className="action-btn">
@@ -90,6 +121,27 @@ function Post({ post, onUpdate }) {
         <span className="caption-username">{username}</span>
         <span className="caption-text">{post.caption || ''}</span>
       </div>
+
+      {/* izohlar ro'yxati */}
+      {showComments && (
+        <div className="post-comments">
+          {comments.map((c) => (
+            <div key={c.id} className="post-comment-item">
+              <span className="comment-username">{c.user?.username}</span>
+              <span className="comment-body">{c.body}</span>
+            </div>
+          ))}
+          <form onSubmit={handleAddComment} className="post-comment-form">
+            <input
+              type="text"
+              placeholder="Add a comment..."
+              value={commentText}
+              onChange={(e) => setCommentText(e.target.value)}
+            />
+            <button type="submit" disabled={!commentText.trim()}>Post</button>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

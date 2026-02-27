@@ -56,6 +56,7 @@ function EditProfile() {
     setError('');
   };
 
+  // avatar o'zgartirish - rasm yuklash
   const handleAvatarChange = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;

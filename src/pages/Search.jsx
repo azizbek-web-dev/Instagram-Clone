@@ -10,6 +10,7 @@ function Search() {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
 
+  // 2 ta belgidan keyin qidiruv boshlanadi
   useEffect(() => {
     if (searchQuery.length < 2) {
       setUsers([]);

@@ -1,10 +1,12 @@
 import { API_BASE_URL } from '../config/api';
 
+// localStorage dan token olish
 const getToken = () => localStorage.getItem('token');
 
 export const api = {
   baseURL: API_BASE_URL,
 
+  // barcha so'rovlar shu orqali o'tadi
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
     const headers = {
@@ -12,6 +14,7 @@ export const api = {
       ...options.headers,
     };
 
+    // FormData bo'lsa Content-Type qo'ymaymiz, brauzer o'zi qo'yadi
     if (!(options.body instanceof FormData)) {
       headers['Content-Type'] = 'application/json';
     }

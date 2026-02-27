@@ -174,3 +174,46 @@
 .caption-text {
   font-weight: 400;
 }
+
+/* izohlar */
+.post-comments {
+  padding: 0 16px 16px;
+  border-top: 1px solid #efefef;
+  margin-top: 8px;
+}
+
+.post-comment-item {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.comment-username {
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.post-comment-form {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.post-comment-form input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+
+.post-comment-form button {
+  background: none;
+  border: none;
+  color: #0095f6;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.post-comment-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

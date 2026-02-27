@@ -1,5 +1,6 @@
 import { api } from './api';
 
+// profil bilan ishlash
 export const profileApi = {
   getProfile() {
     return api.get('/api/profile');
@@ -9,6 +10,7 @@ export const profileApi = {
     return api.put('/api/profile', data);
   },
 
+  // rasm yuklash uchun FormData
   changeAvatar(file) {
     const formData = new FormData();
     formData.append('avatar', file);

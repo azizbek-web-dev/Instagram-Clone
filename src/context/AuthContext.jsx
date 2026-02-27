@@ -2,12 +2,14 @@ import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
+// login holatini saqlash - token va user
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // sahifa yangilanganda localStorage dan user olish
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
       try {

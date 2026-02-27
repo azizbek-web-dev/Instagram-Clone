@@ -23,6 +23,7 @@ function Profile() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // profil va postlarni birga yuklash
     const load = async () => {
       try {
         const [profileRes, postsRes] = await Promise.all([

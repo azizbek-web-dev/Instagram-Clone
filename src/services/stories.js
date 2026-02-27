@@ -1,5 +1,6 @@
 import { api } from './api';
 
+// storylar 24 soat davom etadi
 export const storiesApi = {
   getStories() {
     return api.get('/api/stories');
@@ -14,6 +15,7 @@ export const storiesApi = {
     });
   },
 
+  // username bo'yicha story ko'rish
   getStory(username) {
     return api.get(`/api/stories/${username}`);
   },

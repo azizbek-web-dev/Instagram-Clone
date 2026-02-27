@@ -1,10 +1,12 @@
 import { api } from './api';
 
+// postlar bilan ishlash
 export const postsApi = {
   getFeed() {
     return api.get('/api/posts/feed');
   },
 
+  // rasm + caption + location
   createPost(data) {
     const formData = new FormData();
     formData.append('image', data.image);

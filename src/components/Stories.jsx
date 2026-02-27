@@ -7,6 +7,7 @@ function Stories() {
   const [stories, setStories] = useState([]);
   const fileInputRef = useRef(null);
 
+  // storylar ro'yxatini yuklash
   const load = async () => {
     try {
       const { stories: data } = await storiesApi.getStories();
@@ -20,6 +21,7 @@ function Stories() {
     load();
   }, []);
 
+  // rasm tanlab story qo'shish
   const handleAddStory = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;

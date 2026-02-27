@@ -1,5 +1,6 @@
 import { api } from './api';
 
+// obuna bo'lish / olib tashlash
 export const followApi = {
   follow(userId) {
     return api.post(`/api/users/${userId}/follow`);
