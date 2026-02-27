@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import EditProfile from './pages/EditProfile';
 import Live from './pages/Live';
 import MyLive from './pages/MyLive';
+import Story from './pages/Story';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/profile/edit" element={<EditProfile />} />
         <Route path="/live/:username" element={<Live />} />
         <Route path="/my-live" element={<MyLive />} />
+        <Route path="/stories/:username" element={<Story />} />
       </Routes>
     </Router>
   );

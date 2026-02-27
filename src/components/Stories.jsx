@@ -28,7 +28,9 @@ function Stories() {
               {content}
             </Link>
           ) : (
-            <div key={story.id} className="story-item">{content}</div>
+            <Link key={story.id} to={`/stories/${story.username}`} className="story-item">
+              {content}
+            </Link>
           );
         })}
       </div>
