@@ -3,17 +3,7 @@ import SearchTopBar from '../components/SearchTopBar';
 import BottomNavbar from '../components/BottomNavbar';
 import './Search.css';
 
-const gridImages = [
-  '/images/main-post.png',
-  '/images/profile-image1.png',
-  '/images/profile-image2.png',
-  '/images/profile-image3.png',
-  '/images/profile-image4.png',
-  '/images/profile-image5.png',
-  '/images/profile-image6.png',
-  '/images/profile-image7.png',
-  '/images/main-post.png'
-];
+const gridImages = Array(9).fill('/images/main-post.png');
 
 function Search() {
   const [searchQuery, setSearchQuery] = useState('');
