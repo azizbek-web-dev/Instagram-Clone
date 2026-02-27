@@ -1,0 +1,117 @@
+.top-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dbdbdb;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.top-nav-left {
+  display: flex;
+  align-items: center;
+}
+
+.time {
+  font-size: 15px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.top-nav-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.instagram-logo-nav {
+  font-family: 'Billabong', cursive;
+  font-size: 24px;
+  font-weight: 400;
+  color: #262626;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+.top-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-icon-wrapper {
+  position: relative;
+}
+
+.notification-dot {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background-color: #ed4956;
+  border-radius: 50%;
+  border: 1px solid #ffffff;
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.bottom-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 8px 0;
+  background-color: #ffffff;
+  border-top: 1px solid #dbdbdb;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.nav-item:hover {
+  opacity: 0.7;
+}
+
+.nav-icon-bottom {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.profile-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+}
+
+.nav-item.active .nav-icon-bottom {
+  opacity: 1;
+}
+
+@media (max-width: 450px) {
+  .top-navbar {
+    padding: 8px 12px;
+  }
+  
+  .bottom-navbar {
+    padding: 6px 0;
+  }
+}
