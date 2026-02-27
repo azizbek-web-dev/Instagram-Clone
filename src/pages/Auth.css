@@ -16,6 +16,12 @@
   border-radius: 1px;
   padding: 40px 40px 20px;
   margin-bottom: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s ease;
+}
+
+.auth-box:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
 }
 
 .auth-header {
@@ -30,6 +36,13 @@
   margin: 0 0 20px;
   color: #262626;
   letter-spacing: 1px;
+  cursor: default;
+  user-select: none;
+  transition: transform 0.2s ease;
+}
+
+.instagram-logo:hover {
+  transform: scale(1.02);
 }
 
 .register-subtitle {
@@ -61,10 +74,17 @@
   color: #262626;
   outline: none;
   box-sizing: border-box;
+  transition: all 0.2s ease;
 }
 
 .auth-input:focus {
   border-color: #a8a8a8;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+}
+
+.auth-input:hover {
+  border-color: #b2b2b2;
 }
 
 .auth-input::placeholder {
@@ -80,10 +100,12 @@
   color: #00376b;
   font-size: 12px;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 .forgot-link:hover {
   text-decoration: underline;
+  color: #004182;
 }
 
 .auth-button {
@@ -98,7 +120,9 @@
   cursor: pointer;
   margin-top: 8px;
   opacity: 0.7;
-  transition: opacity 0.2s;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .auth-button.active {
@@ -107,10 +131,17 @@
 
 .auth-button:hover.active {
   background-color: #1877f2;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 149, 246, 0.3);
+}
+
+.auth-button:active.active {
+  transform: translateY(0);
 }
 
 .auth-button:disabled {
   cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .divider {
@@ -148,10 +179,12 @@
   color: #0095f6;
   text-decoration: none;
   font-weight: 600;
+  transition: color 0.2s ease;
 }
 
 .auth-link:hover {
   text-decoration: underline;
+  color: #1877f2;
 }
 
 .app-footer {
@@ -165,14 +198,42 @@
   margin: 0;
 }
 
+.input-group {
+  position: relative;
+}
+
+.input-group::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #0095f6;
+  transition: width 0.3s ease;
+}
+
+.input-group:focus-within::after {
+  width: 100%;
+}
+
 @media (max-width: 450px) {
   .auth-box {
     border: none;
     padding: 30px 20px 20px;
+    box-shadow: none;
+  }
+  
+  .auth-box:hover {
+    box-shadow: none;
   }
   
   .auth-container {
     background-color: #ffffff;
     padding: 0;
+  }
+  
+  .instagram-logo {
+    font-size: 45px;
   }
 }
