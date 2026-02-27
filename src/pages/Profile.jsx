@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import BottomNavbar from '../components/BottomNavbar';
 import { HiOutlineLockClosed } from 'react-icons/hi';
 import { MdOutlineKeyboardArrowDown, MdOutlineMenu } from 'react-icons/md';
@@ -57,7 +58,7 @@ function Profile() {
             <span className="bio-link">@pixsellz</span><br />
             Everything is designed.
           </p>
-          <button className="edit-profile-btn">Edit Profile</button>
+          <Link to="/profile/edit" className="edit-profile-btn">Edit Profile</Link>
         </div>
 
         <div className="profile-highlights">

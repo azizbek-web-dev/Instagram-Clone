@@ -121,6 +121,7 @@
 }
 
 .edit-profile-btn {
+  display: block;
   width: 100%;
   padding: 8px 16px;
   border: 1px solid #dbdbdb;
@@ -130,6 +131,8 @@
   font-weight: 600;
   color: #262626;
   cursor: pointer;
+  text-align: center;
+  text-decoration: none;
 }
 
 .profile-highlights {
