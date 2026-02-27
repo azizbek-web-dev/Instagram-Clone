@@ -1,24 +1,41 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { authApi } from '../services/auth';
 import './Auth.css';
 
 function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    setError('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/home');
+    setError('');
+    setLoading(true);
+    try {
+      const { user, token } = await authApi.login(formData);
+      login(user, token);
+      navigate('/home');
+    } catch (err) {
+      const msg = err.errors?.email?.[0] || err.message || 'Login failed';
+      setError(typeof msg === 'string' ? msg : msg[0] || 'Login failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -51,6 +68,8 @@ function Login() {
             />
           </div>
 
+          {error && <p className="auth-error">{error}</p>}
+
           <div className="forgot-password">
             <Link to="/forgot-password" className="forgot-link">Forgot password?</Link>
           </div>
@@ -58,9 +77,9 @@ function Login() {
           <button 
             type="submit" 
             className={`auth-button ${formData.email && formData.password ? 'active' : ''}`}
-            disabled={!formData.email || !formData.password}
+            disabled={!formData.email || !formData.password || loading}
           >
-            Log in
+            {loading ? 'Loading...' : 'Log in'}
           </button>
         </form>
 

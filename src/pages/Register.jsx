@@ -1,25 +1,43 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { authApi } from '../services/auth';
 import './Auth.css';
 
 function Register() {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     fullName: '',
     username: '',
     password: ''
   });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     });
+    setError('');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Register:', formData);
+    setError('');
+    setLoading(true);
+    try {
+      const { user, token } = await authApi.register(formData);
+      login(user, token);
+      navigate('/home');
+    } catch (err) {
+      const msg = err.errors?.email?.[0] || err.errors?.password?.[0] || err.message || 'Registration failed';
+      setError(typeof msg === 'string' ? msg : msg[0] || 'Registration failed');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -75,12 +93,14 @@ function Register() {
             />
           </div>
 
+          {error && <p className="auth-error">{error}</p>}
+
           <button 
             type="submit" 
             className={`auth-button ${formData.email && formData.fullName && formData.username && formData.password ? 'active' : ''}`}
-            disabled={!formData.email || !formData.fullName || !formData.username || !formData.password}
+            disabled={!formData.email || !formData.fullName || !formData.username || !formData.password || loading}
           >
-            Sign up
+            {loading ? 'Loading...' : 'Sign up'}
           </button>
         </form>
 
