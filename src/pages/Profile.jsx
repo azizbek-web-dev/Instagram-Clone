@@ -31,7 +31,7 @@ function Profile() {
 
       <div className="profile-main">
         <div className="profile-info">
-          <div className="profile-avatar-wrapper">
+          <div className="profile-avatar-wrapper profile-avatar-story">
             <img src="/images/profile-image1.png" alt="profile" className="profile-avatar" />
           </div>
           <div className="profile-stats">

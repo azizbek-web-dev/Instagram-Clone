@@ -59,11 +59,19 @@
   flex-shrink: 0;
 }
 
+.profile-avatar-story {
+  padding: 3px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+}
+
 .profile-avatar {
-  width: 86px;
-  height: 86px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
   object-fit: cover;
+  border: 3px solid #ffffff;
+  display: block;
 }
 
 .profile-stats {
